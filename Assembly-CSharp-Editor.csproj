@@ -41,10 +41,10 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Photon\Simple\Components\Editor\SyncTransformEditor.cs" />
      <Compile Include="Assets\Photon\Simple\Components\Editor\SyncAnimatorEditor.cs" />
-     <Compile Include="Assets\Photon\Simple\Example\Assistants\Editor\TutorialAssists.cs" />
      <Compile Include="Assets\Photon\Simple\Utilities\GUITools\Editor\GUIColorBoxes.cs" />
+     <Compile Include="Assets\Photon\Simple\Components\Editor\SyncTransformEditor.cs" />
+     <Compile Include="Assets\Photon\Simple\Example\Assistants\Editor\TutorialAssists.cs" />
      <Compile Include="Assets\Photon\Simple\Components\Editor\SyncVitalsEditor.cs" />
      <Reference Include="UnityEngine">
      <HintPath>H:/EXTRA SOFTWARE SPACE/2021.2.4f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -307,8 +307,17 @@
      <Reference Include="Unity.Plastic.Newtonsoft.Json">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/PackageCache/com.unity.collab-proxy@1.15.1/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
      </Reference>
+     <Reference Include="ByteConverter">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonUtilities/Compression/plugins/ByteConverter.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Plastic.Antlr3.Runtime">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/PackageCache/com.unity.collab-proxy@1.15.1/Lib/Editor/PlasticSCM/Unity.Plastic.Antlr3.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="Photon3Unity3D">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonLibs/Photon3Unity3D.dll</HintPath>
+     </Reference>
+     <Reference Include="websocket-sharp">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
      </Reference>
      <Reference Include="unityplastic">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/PackageCache/com.unity.collab-proxy@1.15.1/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
@@ -318,6 +327,9 @@
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Mdb">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/PackageCache/com.unity.burst@1.6.0/Unity.Burst.CodeGen/Unity.Burst.Cecil.Mdb.dll</HintPath>
+     </Reference>
+     <Reference Include="FloatCrusher">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonUtilities/TransformCrusher/plugins/FloatCrusher.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Pdb">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/PackageCache/com.unity.burst@1.6.0/Unity.Burst.CodeGen/Unity.Burst.Cecil.Pdb.dll</HintPath>
@@ -333,18 +345,6 @@
      </Reference>
      <Reference Include="Newtonsoft.Json">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
-     </Reference>
-     <Reference Include="ByteConverter">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonUtilities/Compression/plugins/ByteConverter.dll</HintPath>
-     </Reference>
-     <Reference Include="Photon3Unity3D">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonLibs/Photon3Unity3D.dll</HintPath>
-     </Reference>
-     <Reference Include="websocket-sharp">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
-     </Reference>
-     <Reference Include="FloatCrusher">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonUtilities/TransformCrusher/plugins/FloatCrusher.dll</HintPath>
      </Reference>
      <Reference Include="QuatCompress">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonUtilities/TransformCrusher/plugins/QuatCompress.dll</HintPath>
@@ -721,89 +721,20 @@
      <Reference Include="UnityEditor.TestRunner">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.2D.IK.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.IK.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.Common.Runtime">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEditor.UI">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.Psdimporter.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VSCode.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.IK.Runtime">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.IK.Runtime.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.PixelPerfect.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
+     <Reference Include="Unity.2D.Animation.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.InternalAPIEngineBridge.001">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.InternalAPIEditorBridge.001">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.Sprite.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.SpriteShape.Runtime">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
+     <Reference Include="Unity.VSCode.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
      </Reference>
      <Reference Include="Unity.2D.PixelPerfect">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.PixelPerfect.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Mathematics">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.Common.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Burst.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.SpriteShape.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Rider.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
-     </Reference>
      <Reference Include="Unity.2D.Tilemap.Editor">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Timeline">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Timeline.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.Animation.Runtime">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.VisualStudio.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.PlasticSCM.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEngine.UI">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Mathematics.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.Path.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.2D.Animation.Editor">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
-     </Reference>
-     <Reference Include="Unity.Burst">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
      </Reference>
      <Reference Include="PsdPlugin">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
@@ -811,8 +742,77 @@
      <Reference Include="Unity.TextMeshPro.Editor">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
      </Reference>
+     <Reference Include="Unity.VisualStudio.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Timeline">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.TextMeshPro">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Burst.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.IK.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.IK.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.Sprite.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.Path.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEditor.UI">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Rider.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.PlasticSCM.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.PlasticSCM.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="UnityEngine.UI">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.Psdimporter.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Mathematics">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.IK.Runtime">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.IK.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Burst">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.InternalAPIEditorBridge.001">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.InternalAPIEditorBridge.001.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.Animation.Runtime">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Animation.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.PixelPerfect.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Timeline.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Mathematics.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.Common.Runtime">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Common.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.SpriteShape.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.Common.Editor">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.2D.SpriteShape.Runtime">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/ScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -820,9 +820,37 @@
       <Project>{cb0a7609-7669-c975-1a4a-790eb3273459}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="PhotonChat.csproj">
+      <Project>{8e56f150-3c77-e0b8-4a90-1b9f5b4181d5}</Project>
+      <Name>PhotonChat</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.Editor.csproj">
+      <Project>{16ea9af3-6e26-63f0-9333-c7e140c8db17}</Project>
+      <Name>PhotonUnityNetworking.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.csproj">
       <Project>{56d3a3c8-c00e-7917-2932-9c25ad83c739}</Project>
       <Name>PhotonUnityNetworking.Utilities.PhotonPlayer.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="PunDemos.DemoHubEditor.csproj">
+      <Project>{5f51328d-cf31-7b41-8c49-d462e5cb292e}</Project>
+      <Name>PunDemos.DemoHubEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonRealtime.csproj">
+      <Project>{15e8e9e7-80fc-2c9e-1d8f-741d52625bcd}</Project>
+      <Name>PhotonRealtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="EmoCompressUtilsASMDEF.csproj">
+      <Project>{c8bd21ba-a56b-6484-be8d-6057f1390e4d}</Project>
+      <Name>EmoCompressUtilsASMDEF</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.Utilities.csproj">
+      <Project>{0f4c7e91-0f1f-034f-5d5f-9a32ade28e1e}</Project>
+      <Name>PhotonUnityNetworking.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="PhotonUnityNetworking.csproj">
+      <Project>{7f5b8c03-b2ac-5182-f4c2-283c598b2269}</Project>
+      <Name>PhotonUnityNetworking</Name>
     </ProjectReference>
     <ProjectReference Include="BitpackersASMDEF.csproj">
       <Project>{e32ebba0-e975-facf-4499-70684cfe26ce}</Project>
@@ -832,9 +860,9 @@
       <Project>{57eccbb4-e28a-0878-064c-4746fbb02ecc}</Project>
       <Name>PhotonUnityNetworking.Demos</Name>
     </ProjectReference>
-    <ProjectReference Include="PhotonChat.csproj">
-      <Project>{8e56f150-3c77-e0b8-4a90-1b9f5b4181d5}</Project>
-      <Name>PhotonChat</Name>
+    <ProjectReference Include="HalfFloatASMDEF.csproj">
+      <Project>{fdb4c477-ae4b-f5ba-7c81-168184cb0dc4}</Project>
+      <Name>HalfFloatASMDEF</Name>
     </ProjectReference>
     <ProjectReference Include="PunDemos.DemoSlotcarEditor.csproj">
       <Project>{b941cfdc-b0a5-3444-0a74-5a564e230349}</Project>
@@ -843,34 +871,6 @@
     <ProjectReference Include="PhotonUnityNetworking.Utilities.Culling.Editor.csproj">
       <Project>{f998c644-c60a-2670-6f8f-9d4457d6d71d}</Project>
       <Name>PhotonUnityNetworking.Utilities.Culling.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Utilities.csproj">
-      <Project>{0f4c7e91-0f1f-034f-5d5f-9a32ade28e1e}</Project>
-      <Name>PhotonUnityNetworking.Utilities</Name>
-    </ProjectReference>
-    <ProjectReference Include="PunDemos.DemoHubEditor.csproj">
-      <Project>{5f51328d-cf31-7b41-8c49-d462e5cb292e}</Project>
-      <Name>PunDemos.DemoHubEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="EmoCompressUtilsASMDEF.csproj">
-      <Project>{c8bd21ba-a56b-6484-be8d-6057f1390e4d}</Project>
-      <Name>EmoCompressUtilsASMDEF</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonRealtime.csproj">
-      <Project>{15e8e9e7-80fc-2c9e-1d8f-741d52625bcd}</Project>
-      <Name>PhotonRealtime</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.csproj">
-      <Project>{7f5b8c03-b2ac-5182-f4c2-283c598b2269}</Project>
-      <Name>PhotonUnityNetworking</Name>
-    </ProjectReference>
-    <ProjectReference Include="PhotonUnityNetworking.Editor.csproj">
-      <Project>{16ea9af3-6e26-63f0-9333-c7e140c8db17}</Project>
-      <Name>PhotonUnityNetworking.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="HalfFloatASMDEF.csproj">
-      <Project>{fdb4c477-ae4b-f5ba-7c81-168184cb0dc4}</Project>
-      <Name>HalfFloatASMDEF</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private List<string> wordsInCurrentParagraph = new List<string>();
     [SerializeField] private TMP_InputField inputField;
    // [SerializeField] private Slider mySliderScore;
+    [SerializeField] private bool countdownStarted = false;
     [SerializeField] private bool gameStarted = false;
     [SerializeField] private int currentWordCheckingIndex = 0;
     [SerializeField] private TMP_Text highlightedWord;
@@ -27,10 +29,15 @@ public class GameController : MonoBehaviour
 
     [SerializeField] public PlayerData myPlayer;
     [SerializeField] public TMP_InputField playerNameTextInputText;
+    [SerializeField] public string myPlayerName;
+
+
+    [SerializeField] private GameObject waitingPanel;
 
     private bool typingStarted = false;
     private float timeCounter;
     private float currentWPM = 0;
+    public int currentWaitingTime = 0;
     private void Start()
     {
         ChooseRandomParagraph();
@@ -47,7 +54,10 @@ public class GameController : MonoBehaviour
         UpdateSliderScore();
     }
 
-
+    public void UpdatePlayerName()
+    {
+        myPlayerName = playerNameTextInputText.text;
+    }
     public void OnInputTextChange()
     {
         RecheckHighlightedWord();
@@ -58,7 +68,7 @@ public class GameController : MonoBehaviour
             if (typingStarted == false)
             {
                 typingStarted = true;
-                InvokeRepeating(nameof(IncreaseTimeBySecond),1,1);
+                InvokeRepeating(nameof(IncreaseTimeBySecondAndUpdateValues),1,1);
             }
             
             // Check if the its the right word
@@ -94,11 +104,14 @@ public class GameController : MonoBehaviour
             }
         }
 
-        UpdateSliderScore();
-        CalculateWPM();
-        
-        if(myPlayer != null)
-            myPlayer.UpdateValues((int)currentWPM,(int)currentPercentage);
+       // UpdateSliderScore();
+       // CalculateWPM();
+
+       // if (myPlayer != null)
+       // {
+       //     myPlayer.pw.RPC("UpdateValues",RpcTarget.AllBuffered,(int)currentWPM,(int)currentPercentage);
+       // }
+          
     }
 
     void ExtractWords(string tempTextToTypeCopy)
@@ -160,16 +173,22 @@ public class GameController : MonoBehaviour
         {
             float secondsToMinute = timeCounter / 60;
             currentWPM = wordsCompleted / secondsToMinute;
-            currentWPMText.text = (int)currentWPM + " WPM";
+           // currentWPMText.text = (int)currentWPM + " WPM";
             
             if(myPlayer != null)
                 myPlayer.currentWPM = (int) currentWPM;
         }
     }
 
-    void IncreaseTimeBySecond()
+    void IncreaseTimeBySecondAndUpdateValues()
     {
         timeCounter += 1;
+        UpdateSliderScore();
+        CalculateWPM();
+        if (myPlayer != null)
+        {
+            myPlayer.pw.RPC("UpdateValues",RpcTarget.AllBuffered,(int)currentWPM,(int)currentPercentage);
+        }
     }
 
     
@@ -188,5 +207,40 @@ public class GameController : MonoBehaviour
         //     
         // }
         return word;
+    }
+    
+    
+    public void StartGameAfterAllPlayerJoin()
+    {
+        if (countdownStarted == false)
+        {
+            countdownStarted = true;
+            waitingPanel.gameObject.SetActive(true);
+            InvokeRepeating(nameof(AddSeconds),1,1);
+        }
+    }
+
+    public void StopGameCountDown()
+    {
+        countdownStarted = false;
+        gameStarted = false;
+        waitingPanel.gameObject.SetActive(false);
+        PhotonNetwork.CurrentRoom.IsOpen = true;
+        currentWaitingTime = 0;
+        CancelInvoke(nameof(AddSeconds));
+    }
+
+    
+    void AddSeconds()
+    {
+        currentWaitingTime += 1;
+        waitingPanel.GetComponentInChildren<TMP_Text>().text = "Waiting.... " + currentWaitingTime + "s";
+        
+        if (currentWaitingTime > 10)
+        {
+            gameStarted = true;
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            waitingPanel.gameObject.SetActive(false);
+        }
     }
 }

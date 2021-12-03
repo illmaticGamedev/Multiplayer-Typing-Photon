@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using Photon.Realtime;
 using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
+
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
     public TMP_InputField usernameInput;
@@ -14,13 +16,24 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject gamePanel;
 
 
-    public List<Transform> playerPosList = new List<Transform>();
+    public List<PlayerDataSlot> playerPosList = new List<PlayerDataSlot>();
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private int minPlayerNeeded = 2;
+
+    private PlayerData newPlayerData;
+    private PhotonView myPV;
+
+    private void Start()
+    {
+        myPV = GetComponent<PhotonView>();
+    }
+
     public void OnClickQuickPlay()
     {
         if (usernameInput.text != "")
         {
             PhotonNetwork.NickName = usernameInput.text;
+            GameObject.FindObjectOfType<GameController>().UpdatePlayerName();
             buttonText.text = "Connecting....";
             PhotonNetwork.ConnectUsingSettings();
         }
@@ -47,16 +60,21 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     {
         base.OnJoinRoomFailed(returnCode, message);
         Debug.Log("Join Room Failed - " + message);
-        PhotonNetwork.CreateRoom(usernameInput.text + "'s Lobby", new RoomOptions() {MaxPlayers = 4},null);
+        PhotonNetwork.CreateRoom(usernameInput.text + "'s Lobby", new RoomOptions() {MaxPlayers = 4}, null);
     }
-    
+
     public override void OnJoinedRoom()
     {
         Debug.Log("Joined A Room..");
         //Turn off pre game screen
         preGamePanel.gameObject.SetActive(false);
         gamePanel.gameObject.SetActive(true);
-        UpdatePlayerList(PhotonNetwork.LocalPlayer);
+
+        GameObject newPlayerObject =
+            PhotonNetwork.Instantiate(playerPrefab.name, playerPrefab.transform.position, Quaternion.identity);
+        newPlayerData = newPlayerObject.GetComponent<PlayerData>();
+        PhotonView newPlayerPV = newPlayerObject.GetComponent<PhotonView>();
+        //newPlayerPV.RPC("SyncPlayerSlots",RpcTarget.AllBuffered);
     }
 
     public override void OnCreatedRoom()
@@ -65,24 +83,45 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         //Turn off pre game screen
         preGamePanel.gameObject.SetActive(false);
         gamePanel.gameObject.SetActive(true);
-        UpdatePlayerList(PhotonNetwork.LocalPlayer);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        UpdatePlayerList(newPlayer);
+        Debug.Log("New Player Entered The Room..");
+        // newlyJoinedPlayer = newPlayer;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            myPV.RPC(nameof(CheckAndStartGameIfEnoughPlayersAvailable), RpcTarget.AllBuffered);
+        }
     }
 
-    public void UpdatePlayerList(Player newPlayer)
+
+    [PunRPC]
+    public void CheckAndStartGameIfEnoughPlayersAvailable()
+    {
+        if (PhotonNetwork.PlayerList.Length >= minPlayerNeeded)
+        {
+            FindObjectOfType<GameController>().StartGameAfterAllPlayerJoin();
+        }
+        else
+        {
+            FindObjectOfType<GameController>().StopGameCountDown();
+        }
+    }
+
+    public PlayerDataSlot GetFreePlayerDataSlot()
     {
         foreach (var item in playerPosList)
         {
-            if (item.childCount == 0)
+            if (item.isTaken == false)
             {
-                GameObject newPlayerPrefab = Instantiate(playerPrefab, item.transform);
-                newPlayerPrefab.GetComponent<PlayerData>().playerName = newPlayer.NickName;
-                break;
+                item.isTaken = true;
+                item.gameObject.SetActive(true);
+                return item;
             }
         }
+
+        return null;
     }
 }

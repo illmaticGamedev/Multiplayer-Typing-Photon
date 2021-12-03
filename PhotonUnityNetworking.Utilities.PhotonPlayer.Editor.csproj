@@ -41,8 +41,8 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Photon\PhotonUnityNetworking\UtilityScripts\PhotonPlayer\Editor\PhotonTeamsManagerInspector.cs" />
      <Compile Include="Assets\Photon\PhotonUnityNetworking\UtilityScripts\PhotonPlayer\Editor\PunTeamsInspector.cs" />
+     <Compile Include="Assets\Photon\PhotonUnityNetworking\UtilityScripts\PhotonPlayer\Editor\PhotonTeamsManagerInspector.cs" />
      <Compile Include="Assets\Photon\PhotonUnityNetworking\UtilityScripts\PhotonPlayer\Editor\PlayerNumberingInspector.cs" />
      <None Include="Assets\Photon\PhotonUnityNetworking\UtilityScripts\PhotonPlayer\Editor\PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.asmdef" />
      <Reference Include="UnityEngine">
@@ -306,8 +306,17 @@
      <Reference Include="Unity.Plastic.Newtonsoft.Json">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/PackageCache/com.unity.collab-proxy@1.15.1/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
      </Reference>
+     <Reference Include="ByteConverter">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonUtilities/Compression/plugins/ByteConverter.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.Plastic.Antlr3.Runtime">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/PackageCache/com.unity.collab-proxy@1.15.1/Lib/Editor/PlasticSCM/Unity.Plastic.Antlr3.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="Photon3Unity3D">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonLibs/Photon3Unity3D.dll</HintPath>
+     </Reference>
+     <Reference Include="websocket-sharp">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
      </Reference>
      <Reference Include="unityplastic">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/PackageCache/com.unity.collab-proxy@1.15.1/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
@@ -317,6 +326,9 @@
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Mdb">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/PackageCache/com.unity.burst@1.6.0/Unity.Burst.CodeGen/Unity.Burst.Cecil.Mdb.dll</HintPath>
+     </Reference>
+     <Reference Include="FloatCrusher">
+     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonUtilities/TransformCrusher/plugins/FloatCrusher.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Burst.Cecil.Pdb">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/PackageCache/com.unity.burst@1.6.0/Unity.Burst.CodeGen/Unity.Burst.Cecil.Pdb.dll</HintPath>
@@ -332,18 +344,6 @@
      </Reference>
      <Reference Include="Newtonsoft.Json">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
-     </Reference>
-     <Reference Include="ByteConverter">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonUtilities/Compression/plugins/ByteConverter.dll</HintPath>
-     </Reference>
-     <Reference Include="Photon3Unity3D">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonLibs/Photon3Unity3D.dll</HintPath>
-     </Reference>
-     <Reference Include="websocket-sharp">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll</HintPath>
-     </Reference>
-     <Reference Include="FloatCrusher">
-     <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonUtilities/TransformCrusher/plugins/FloatCrusher.dll</HintPath>
      </Reference>
      <Reference Include="QuatCompress">
      <HintPath>D:/BYTEHOP/Multiplayer Typing CMG/Assets/Photon/PhotonUtilities/TransformCrusher/plugins/QuatCompress.dll</HintPath>
