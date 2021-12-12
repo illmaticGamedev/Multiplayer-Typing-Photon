@@ -18,17 +18,20 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public List<PlayerDataSlot> playerPosList = new List<PlayerDataSlot>();
     [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private int minPlayerNeeded = 2;
 
     private PlayerData newPlayerData;
     private PhotonView myPV;
+    
+    [Header("Private Panel")] 
+    [SerializeField] TMP_InputField inputFieldLobbyName;
+    [SerializeField] private GameObject privateGamePanel;
 
     private void Start()
     {
         myPV = GetComponent<PhotonView>();
     }
 
-    public void OnClickQuickPlay()
+    public void OnClickPlay()
     {
         if (usernameInput.text != "")
         {
@@ -60,8 +63,12 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     {
         base.OnJoinRoomFailed(returnCode, message);
         Debug.Log("Join Room Failed - " + message);
-        PhotonNetwork.CreateRoom(usernameInput.text + "'s Lobby", new RoomOptions() {MaxPlayers = 4}, null);
+        if (inputFieldLobbyName.text.Contains("_privateGame") == false && inputFieldLobbyName.text == "")
+        {
+            PhotonNetwork.CreateRoom(usernameInput.text + "'s Lobby", new RoomOptions() {MaxPlayers = 4}, null);
+        }
     }
+    
 
     public override void OnJoinedRoom()
     {
@@ -69,6 +76,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         //Turn off pre game screen
         preGamePanel.gameObject.SetActive(false);
         gamePanel.gameObject.SetActive(true);
+        privateGamePanelState(false);
 
         GameObject newPlayerObject =
             PhotonNetwork.Instantiate(playerPrefab.name, playerPrefab.transform.position, Quaternion.identity);
@@ -83,6 +91,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         //Turn off pre game screen
         preGamePanel.gameObject.SetActive(false);
         gamePanel.gameObject.SetActive(true);
+        privateGamePanelState(false);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -100,8 +109,9 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     [PunRPC]
     public void CheckAndStartGameIfEnoughPlayersAvailable()
     {
-        if (PhotonNetwork.PlayerList.Length >= minPlayerNeeded)
+        if (PhotonNetwork.PlayerList.Length >= GameController.Instance.minimumPlayerToPlay)
         {
+            FindObjectOfType<GameController>().StopGameCountDown();
             FindObjectOfType<GameController>().StartGameAfterAllPlayerJoin();
         }
         else
@@ -123,5 +133,27 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         }
 
         return null;
+    }
+    public void OnClickHostPrivate()
+    {
+        if (usernameInput.text != "")
+        {
+            OnClickPlay();
+            PhotonNetwork.CreateRoom(inputFieldLobbyName.text + "_privateGame", new RoomOptions() {MaxPlayers = 4, IsVisible = false},typedLobby: null);
+        }
+    }
+    
+    public void OnClickJoinPrivate()
+    {
+        if (usernameInput.text != "")
+        {
+            OnClickPlay();
+            PhotonNetwork.JoinRoom(inputFieldLobbyName.text);
+        } 
+    }
+    public void privateGamePanelState(bool state)
+    {
+        privateGamePanel.SetActive(state);
+        inputFieldLobbyName.text = "";
     }
 }

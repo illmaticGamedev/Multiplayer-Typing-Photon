@@ -13,10 +13,19 @@ public class PlayerDataSlot : MonoBehaviour
     public TMP_Text playerWPM;
     public Slider sliderValue;
     public bool isTaken = false;
+    [SerializeField] private Image WPMBackground;
+    [SerializeField] private Sprite GreenWPMBackground;
 
-    public void SetColorForName(Color color)
+    private void Start()
+    {
+        UpdateValues(0,0);
+    }
+
+    public void SetColorForMyPlayer(Color color)
     {
         playerNameText.color = color;
+        sliderValue.fillRect.GetComponent<Image>().color = new Color(0.65f, 0.9f, 0.34f);
+        WPMBackground.sprite = GreenWPMBackground;
     }
 
     public void UpdateValues(int wpm, int slider)

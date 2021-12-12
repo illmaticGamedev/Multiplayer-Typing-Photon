@@ -8,12 +8,18 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    public static GameController Instance;
+
+    [Header("Game Settings")] 
+    [SerializeField] int waitingTimeAfterMinimumPlayers;
+    public int minimumPlayerToPlay;
+    
     [TextArea(1,20)]
     [SerializeField] private string[] paragraphs;
     [SerializeField] private TMP_Text textToType;
     [SerializeField] private List<string> wordsInCurrentParagraph = new List<string>();
     [SerializeField] private TMP_InputField inputField;
-   // [SerializeField] private Slider mySliderScore;
+   
     [SerializeField] private bool countdownStarted = false;
     [SerializeField] private bool gameStarted = false;
     [SerializeField] private int currentWordCheckingIndex = 0;
@@ -34,16 +40,23 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private GameObject waitingPanel;
 
+
+    
     private bool typingStarted = false;
     private float timeCounter;
     private float currentWPM = 0;
     public int currentWaitingTime = 0;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         ChooseRandomParagraph();
         restartGameBtn.onClick.AddListener((() => Application.LoadLevel(Application.loadedLevel)));
     }
-
     void ChooseRandomParagraph()
     {
         int randomIndex = UnityEngine.Random.Range(0,paragraphs.Length);
@@ -53,7 +66,6 @@ public class GameController : MonoBehaviour
         ExtractWords(tempTextToTypeCopy);
         UpdateSliderScore();
     }
-
     public void UpdatePlayerName()
     {
         myPlayerName = playerNameTextInputText.text;
@@ -113,7 +125,6 @@ public class GameController : MonoBehaviour
        // }
           
     }
-
     void ExtractWords(string tempTextToTypeCopy)
     {
         string currentWord = "";
@@ -144,8 +155,6 @@ public class GameController : MonoBehaviour
         initialWordCount = wordsInCurrentParagraph.Count;
         RecheckHighlightedWord();
     }
-
-
     void RecheckHighlightedWord()
     {
         if (textToType.text == "")
@@ -157,7 +166,6 @@ public class GameController : MonoBehaviour
             highlightedWord.text = wordsInCurrentParagraph[0]; 
         }
     }
-
     void UpdateSliderScore()
     {
         if (currentPercentage < 100)
@@ -166,7 +174,6 @@ public class GameController : MonoBehaviour
         }
         //mySliderScore.value = currentPercentage;
     }
-
     void CalculateWPM()
     {
         if (wordsCompleted != 0 && timeCounter != 0)
@@ -179,7 +186,6 @@ public class GameController : MonoBehaviour
                 myPlayer.currentWPM = (int) currentWPM;
         }
     }
-
     void IncreaseTimeBySecondAndUpdateValues()
     {
         timeCounter += 1;
@@ -190,8 +196,6 @@ public class GameController : MonoBehaviour
             myPlayer.pw.RPC("UpdateValues",RpcTarget.AllBuffered,(int)currentWPM,(int)currentPercentage);
         }
     }
-
-    
     // Not sure what the fuck is happening here right now but will figure it out later
     string RemoveOrReplaceWeirdCharactersInWord(string word)
     {
@@ -208,8 +212,6 @@ public class GameController : MonoBehaviour
         // }
         return word;
     }
-    
-    
     public void StartGameAfterAllPlayerJoin()
     {
         if (countdownStarted == false)
@@ -219,7 +221,6 @@ public class GameController : MonoBehaviour
             InvokeRepeating(nameof(AddSeconds),1,1);
         }
     }
-
     public void StopGameCountDown()
     {
         countdownStarted = false;
@@ -229,18 +230,20 @@ public class GameController : MonoBehaviour
         currentWaitingTime = 0;
         CancelInvoke(nameof(AddSeconds));
     }
-
-    
     void AddSeconds()
     {
         currentWaitingTime += 1;
-        waitingPanel.GetComponentInChildren<TMP_Text>().text = "Waiting.... " + currentWaitingTime + "s";
+        currentWaitingTime = Mathf.Clamp(currentWaitingTime,0, waitingTimeAfterMinimumPlayers);
+        waitingPanel.GetComponentInChildren<TMP_Text>().text = "Waiting.... " + (waitingTimeAfterMinimumPlayers - currentWaitingTime) + "s";
         
-        if (currentWaitingTime > 10)
+        if (currentWaitingTime == waitingTimeAfterMinimumPlayers)
         {
             gameStarted = true;
             PhotonNetwork.CurrentRoom.IsOpen = false;
             waitingPanel.gameObject.SetActive(false);
         }
     }
+   
+    
+    
 }

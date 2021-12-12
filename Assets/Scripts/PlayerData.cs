@@ -25,7 +25,7 @@ public class PlayerData : MonoBehaviour
             playerName = FindObjectOfType<GameController>().myPlayerName;
             Debug.Log("Player Name Changed");
             pw.RPC("SyncPlayerSlots",RpcTarget.AllBuffered,PhotonNetwork.NickName);
-            myDataSlot.SetColorForName(Color.green);
+            myDataSlot.SetColorForMyPlayer(Color.green);
         }
     }
     
