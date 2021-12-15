@@ -4,30 +4,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using TMPro;
 using UnityEngine.UI;
 
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
+    public static ConnectToServer Instance;
+    
     public TMP_InputField usernameInput;
-    public TMP_Text buttonText;
+    public TMP_Text playButtonText;
 
     [SerializeField] private GameObject preGamePanel;
     [SerializeField] private GameObject gamePanel;
 
-
-    public List<PlayerDataSlot> playerPosList = new List<PlayerDataSlot>();
+    public List<PlayerDataSlot> playerList = new List<PlayerDataSlot>();
     [SerializeField] private GameObject playerPrefab;
 
     private PlayerData newPlayerData;
     private PhotonView myPV;
+    private int numOfPlayersFinished;
     
     [Header("Private Panel")] 
     [SerializeField] TMP_InputField inputFieldLobbyName;
     [SerializeField] private GameObject privateGamePanel;
-
+    
     private void Start()
     {
+        Instance = this;
         myPV = GetComponent<PhotonView>();
     }
 
@@ -36,8 +40,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         if (usernameInput.text != "")
         {
             PhotonNetwork.NickName = usernameInput.text;
-            GameObject.FindObjectOfType<GameController>().UpdatePlayerName();
-            buttonText.text = "Connecting....";
+            FindObjectOfType<GameController>().UpdatePlayerName();
+            playButtonText.text = "Connecting....";
             PhotonNetwork.ConnectUsingSettings();
         }
     }
@@ -46,7 +50,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     {
         AfterConnectedToMaster();
     }
-
+    
     public void AfterConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
@@ -58,14 +62,17 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRandomRoom();
         Debug.Log("Joined A Lobby..");
     }
+    
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         base.OnJoinRoomFailed(returnCode, message);
         Debug.Log("Join Room Failed - " + message);
+        //playButtonText.text = "QUICK PLAY";
         if (inputFieldLobbyName.text.Contains("_privateGame") == false && inputFieldLobbyName.text == "")
         {
-            PhotonNetwork.CreateRoom(usernameInput.text + "'s Lobby", new RoomOptions() {MaxPlayers = 4}, null);
+            PhotonNetwork.CreateRoom(usernameInput.text + "'s Lobby", new RoomOptions() {MaxPlayers = 4, IsOpen = false}, null);
+            Invoke(nameof(RoomState),2f);
         }
     }
     
@@ -92,13 +99,28 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         preGamePanel.gameObject.SetActive(false);
         gamePanel.gameObject.SetActive(true);
         privateGamePanelState(false);
+        playButtonText.text = "QUICK PLAY";
+        GameController.Instance.waitingPanelTextChange("Waiting for other players... ");
+        GameController.Instance.waitingPanel.SetActive(true);
+        GameController.Instance.SelectRandomParagraph();
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        playButtonText.text = "QUICK PLAY";
+    }
+
+    public void RoomState(bool state = true)
+    {
+        PhotonNetwork.CurrentRoom.IsOpen = true;
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log("New Player Entered The Room..");
         // newlyJoinedPlayer = newPlayer;
-
+        RoomState(false);
+        Invoke(nameof(RoomState),2f);
         if (PhotonNetwork.IsMasterClient)
         {
             myPV.RPC(nameof(CheckAndStartGameIfEnoughPlayersAvailable), RpcTarget.AllBuffered);
@@ -120,9 +142,15 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
+    public void SyncParagraphsFromMaster(int Index)
+    {
+        GameController.Instance.ChooseRandomParagraph(Index);
+    }
+    
     public PlayerDataSlot GetFreePlayerDataSlot()
     {
-        foreach (var item in playerPosList)
+        foreach (var item in playerList)
         {
             if (item.isTaken == false)
             {
@@ -131,7 +159,8 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
                 return item;
             }
         }
-
+        
+        Debug.LogError("PlayerDataSlot Null");
         return null;
     }
     public void OnClickHostPrivate()
@@ -155,5 +184,17 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     {
         privateGamePanel.SetActive(state);
         inputFieldLobbyName.text = "";
+    }
+    public bool CheckIfAnyoneElseCompletedParagraph()
+    {
+        foreach (var item in playerList)
+        {
+            if (item.paragraphCompleted == true && item.isMine == false)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

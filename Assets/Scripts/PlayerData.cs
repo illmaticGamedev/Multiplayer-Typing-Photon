@@ -26,6 +26,7 @@ public class PlayerData : MonoBehaviour
             Debug.Log("Player Name Changed");
             pw.RPC("SyncPlayerSlots",RpcTarget.AllBuffered,PhotonNetwork.NickName);
             myDataSlot.SetColorForMyPlayer(Color.green);
+            myDataSlot.isMine = true;
         }
     }
     
@@ -46,6 +47,12 @@ public class PlayerData : MonoBehaviour
     {
         myDataSlot = FindObjectOfType<ConnectToServer>().GetFreePlayerDataSlot();
         myDataSlot.playerNameText.text = newPlayerName;
+    }
+
+    [PunRPC]
+    public void ParagraphCompleted()
+    {
+        myDataSlot.paragraphCompleted = true;
     }
 
  

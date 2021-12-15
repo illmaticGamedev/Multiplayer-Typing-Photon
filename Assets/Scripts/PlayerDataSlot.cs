@@ -13,6 +13,8 @@ public class PlayerDataSlot : MonoBehaviour
     public TMP_Text playerWPM;
     public Slider sliderValue;
     public bool isTaken = false;
+    public bool isMine = false;
+    public bool paragraphCompleted = false;
     [SerializeField] private Image WPMBackground;
     [SerializeField] private Sprite GreenWPMBackground;
 
@@ -30,7 +32,10 @@ public class PlayerDataSlot : MonoBehaviour
 
     public void UpdateValues(int wpm, int slider)
     {
-        sliderValue.value = slider;
-        playerWPM.text = wpm + " WPM";
+        if (paragraphCompleted == false)
+        {
+            sliderValue.value = slider;
+            playerWPM.text = wpm + " WPM";
+        }
     }
 }

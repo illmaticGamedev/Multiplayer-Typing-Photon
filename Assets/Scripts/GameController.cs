@@ -13,54 +13,70 @@ public class GameController : MonoBehaviour
     [Header("Game Settings")] 
     [SerializeField] int waitingTimeAfterMinimumPlayers;
     public int minimumPlayerToPlay;
+    public int restartingSeconds;
     
+    [Header("Paragraph Related Objects")]
     [TextArea(1,20)]
     [SerializeField] private string[] paragraphs;
     [SerializeField] private TMP_Text textToType;
     [SerializeField] private List<string> wordsInCurrentParagraph = new List<string>();
     [SerializeField] private TMP_InputField inputField;
-   
+    [SerializeField] private TMP_Text highlightedWord;
+    [SerializeField] private GameObject paragraphWritingAnimatingBar;
+    [Header("Game Status/Properties")]
+    private bool typingStarted = false;
     [SerializeField] private bool countdownStarted = false;
     [SerializeField] private bool gameStarted = false;
-    [SerializeField] private int currentWordCheckingIndex = 0;
-    [SerializeField] private TMP_Text highlightedWord;
-    [SerializeField] private TMP_Text currentWPMText;
-    [SerializeField] private Button restartGameBtn;
-    [SerializeField] int initialWordCount;
-    [SerializeField] int wordsCompleted;
     [SerializeField] private float currentPercentage;
-
+    private int currentWordCheckingIndex = 0;
+    private int initialWordCount;
+    private int wordsCompleted;
+    private float timeCounter;
+    private float currentWPM = 0;
+    private int waitingTimePassed = 0;
+    
+    [Header("Reference Data")]
     [SerializeField] private Color correctTextColorWhenTyping;
     [SerializeField] private Color wrongTextColorWhenTyping;
 
+    [Header("Player Data")]
     [SerializeField] public PlayerData myPlayer;
     [SerializeField] public TMP_InputField playerNameTextInputText;
+    [SerializeField] private GameObject playerNameInputAnimatingBar;
     [SerializeField] public string myPlayerName;
 
+    [Header("AllPanels")]
+    [SerializeField] public GameObject waitingPanel;
 
-    [SerializeField] private GameObject waitingPanel;
+    [Header("Win/Lose Panel Setup")] 
+    [SerializeField] GameObject winLosePanelParent;
+    [SerializeField] GameObject winPanel;
+    [SerializeField] private TMP_Text winPanelStatus;
+    [SerializeField] GameObject losePanel;
+   // [SerializeField] private TMP_Text loseNumberText;
+    [SerializeField] private TMP_Text losePanelStatus;
+    [SerializeField] private TMP_Text restartingInSecondsText;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip keyboardClip;
 
-
-    
-    private bool typingStarted = false;
-    private float timeCounter;
-    private float currentWPM = 0;
-    public int currentWaitingTime = 0;
-
+    private int randomParagraphIndexSelectedByMaster;
     private void Awake()
     {
         Instance = this;
     }
 
+    public void typeAnimatingBarState(bool state)
+    {
+        paragraphWritingAnimatingBar.SetActive(state);
+        playerNameInputAnimatingBar.SetActive(state);
+    }
     private void Start()
     {
-        ChooseRandomParagraph();
-        restartGameBtn.onClick.AddListener((() => Application.LoadLevel(Application.loadedLevel)));
+        _audioSource.clip = keyboardClip;
     }
-    void ChooseRandomParagraph()
+   public void ChooseRandomParagraph(int index)
     {
-        int randomIndex = UnityEngine.Random.Range(0,paragraphs.Length);
-        textToType.text = paragraphs[randomIndex];
+        textToType.text = paragraphs[index];
         string tempTextToTypeCopy = textToType.text;
         wordsCompleted = 0;
         ExtractWords(tempTextToTypeCopy);
@@ -73,40 +89,57 @@ public class GameController : MonoBehaviour
     public void OnInputTextChange()
     {
         RecheckHighlightedWord();
-        
+
         if (gameStarted)
         {
             //Start Timer
             if (typingStarted == false)
             {
                 typingStarted = true;
-                InvokeRepeating(nameof(IncreaseTimeBySecondAndUpdateValues),1,1);
+                InvokeRepeating(nameof(IncreaseTimeBySecondAndUpdateValues), 1, 1);
             }
-            
+
             // Check if the its the right word
-            if (inputField.text== wordsInCurrentParagraph[currentWordCheckingIndex])
+            if (wordsInCurrentParagraph.Count > 0 &&
+                inputField.text == wordsInCurrentParagraph[currentWordCheckingIndex])
             {
                 wordsInCurrentParagraph.Remove(inputField.text);
 
                 if (textToType.text.Length == inputField.text.Length - 1)
                 {
-                    textToType.text = textToType.text.Remove(0,inputField.text.Length-1);
-                    
+                    textToType.text = textToType.text.Remove(0, inputField.text.Length - 1);
+
                     currentPercentage = 100;
-                  //  mySliderScore.value = currentPercentage;
                 }
                 else
                 {
-                    textToType.text = textToType.text.Remove(0,inputField.text.Length);
+                    textToType.text = textToType.text.Remove(0, inputField.text.Length);
                 }
 
                 inputField.text = "";
                 wordsCompleted += 1;
-            }  
-            
-            
+                Debug.Log(wordsCompleted + " : " + initialWordCount);
+                if (wordsCompleted == initialWordCount)
+                {
+                    if (ConnectToServer.Instance.CheckIfAnyoneElseCompletedParagraph())
+                    {
+                        ThrowWinLosePanel(false);
+                    }
+                    else
+                    {
+                        ThrowWinLosePanel(true);
+                    }
+                    
+                    winLosePanelParent.SetActive(true);
+                    myPlayer.pw.RPC("UpdateValues",RpcTarget.All,(int) currentWPM, 100);
+                    myPlayer.pw.RPC("ParagraphCompleted", RpcTarget.All);
+                }
+            }
+
+
             //Check if user is mispelling the word
-            if (wordsInCurrentParagraph[currentWordCheckingIndex].Contains(inputField.text))
+            if (wordsInCurrentParagraph.Count > 0 &&
+                wordsInCurrentParagraph[currentWordCheckingIndex].Contains(inputField.text))
             {
                 inputField.textComponent.color = correctTextColorWhenTyping;
             }
@@ -115,15 +148,11 @@ public class GameController : MonoBehaviour
                 inputField.textComponent.color = wrongTextColorWhenTyping;
             }
         }
+        else
+        {
+            inputField.text = "";
+        }
 
-       // UpdateSliderScore();
-       // CalculateWPM();
-
-       // if (myPlayer != null)
-       // {
-       //     myPlayer.pw.RPC("UpdateValues",RpcTarget.AllBuffered,(int)currentWPM,(int)currentPercentage);
-       // }
-          
     }
     void ExtractWords(string tempTextToTypeCopy)
     {
@@ -217,9 +246,13 @@ public class GameController : MonoBehaviour
         if (countdownStarted == false)
         {
             countdownStarted = true;
-            waitingPanel.gameObject.SetActive(true);
-            InvokeRepeating(nameof(AddSeconds),1,1);
+            waitingPanel.SetActive(true);
+            InvokeRepeating(nameof(AddSeconds),0,1);
         }
+    }
+    public void waitingPanelTextChange(string text)
+    {
+        waitingPanel.GetComponentInChildren<TMP_Text>().text = text;
     }
     public void StopGameCountDown()
     {
@@ -227,23 +260,70 @@ public class GameController : MonoBehaviour
         gameStarted = false;
         waitingPanel.gameObject.SetActive(false);
         PhotonNetwork.CurrentRoom.IsOpen = true;
-        currentWaitingTime = 0;
+        waitingTimePassed = 0;
         CancelInvoke(nameof(AddSeconds));
     }
-    void AddSeconds()
+    public void AddSeconds()
     {
-        currentWaitingTime += 1;
-        currentWaitingTime = Mathf.Clamp(currentWaitingTime,0, waitingTimeAfterMinimumPlayers);
-        waitingPanel.GetComponentInChildren<TMP_Text>().text = "Waiting.... " + (waitingTimeAfterMinimumPlayers - currentWaitingTime) + "s";
-        
-        if (currentWaitingTime == waitingTimeAfterMinimumPlayers)
+        waitingTimePassed += 1;
+        waitingTimePassed = Mathf.Clamp(waitingTimePassed,0, waitingTimeAfterMinimumPlayers);
+        waitingPanelTextChange("Waiting.... " + (waitingTimeAfterMinimumPlayers - waitingTimePassed) + "s");
+        if (waitingTimePassed == waitingTimeAfterMinimumPlayers)
         {
-            gameStarted = true;
             PhotonNetwork.CurrentRoom.IsOpen = false;
+            gameStarted = true;
             waitingPanel.gameObject.SetActive(false);
         }
     }
+
+    #region ThrowWinLosePanel
+    public void ThrowWinLosePanel(bool gameWon)
+    {
+        if (gameWon)
+        {
+            winPanelStatus.text = "You had the highest WPM of " + (int)currentWPM + ".";
+            winPanel.gameObject.SetActive(true);
+        }
+        else
+        {
+            losePanelStatus.text = "Your WPM :  " + (int)currentWPM + ".";
+            //loseNumberText.text = "";
+            losePanel.gameObject.SetActive(true); 
+        }
+        restartingInSecondsText.text = "Restarting In " + restartingSeconds + "...";
+        
+        InvokeRepeating(nameof(RestartingInSecondsText),0f,1f);
+    }
+
+    void RestartingInSecondsText()
+    {
+        restartingInSecondsText.text = "Restarting In " + restartingSeconds + "...";
+        restartingSeconds -= 1;
+        
+        if (restartingSeconds == 0)
+        {
+            HardRestartGame();
+        }
+    }
+
+    public void HardRestartGame()
+    {
+        PhotonNetwork.Disconnect();
+        Application.LoadLevel(Application.loadedLevel);
+    }
+   #endregion
    
-    
-    
+    public void PlayClickSound()
+   {
+       _audioSource.Play();
+   }
+
+    public void SelectRandomParagraph()
+   {
+       if (PhotonNetwork.IsMasterClient)
+       {
+           randomParagraphIndexSelectedByMaster = UnityEngine.Random.Range(0,paragraphs.Length);
+           ConnectToServer.Instance.photonView.RPC("SyncParagraphsFromMaster",RpcTarget.AllBuffered,randomParagraphIndexSelectedByMaster);
+       }
+   }
 }

@@ -4,12 +4,28 @@
     <list default="true" id="4a3ac6d5-4d50-4e75-9280-6b15765d7439" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Multiplayer Typing CMG/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Multiplayer Typing CMG/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Multiplayer Typing CMG/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Multiplayer Typing CMG/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Fonts/NotoSans-Regular SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/NotoSans-Regular SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Game.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Game.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/ConnectToServer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ConnectToServer.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerData.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerDataSlot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerDataSlot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BitpackersASMDEF.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BitpackersASMDEF.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/EmoCompressUtilsASMDEF.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/EmoCompressUtilsASMDEF.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HalfFloatASMDEF.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/HalfFloatASMDEF.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotonChat.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PhotonChat.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotonRealtime.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PhotonRealtime.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotonUnityNetworking.Demos.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PhotonUnityNetworking.Demos.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotonUnityNetworking.Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PhotonUnityNetworking.Editor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotonUnityNetworking.Utilities.Culling.Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PhotonUnityNetworking.Utilities.Culling.Editor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PhotonUnityNetworking.Utilities.PhotonPlayer.Editor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotonUnityNetworking.Utilities.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PhotonUnityNetworking.Utilities.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PhotonUnityNetworking.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PhotonUnityNetworking.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PunDemos.DemoHubEditor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PunDemos.DemoHubEditor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PunDemos.DemoSlotcarEditor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/PunDemos.DemoSlotcarEditor.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
     </list>
@@ -21,6 +37,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerDataSlot.cs" root0="FORCE_HIGHLIGHTING" />
@@ -28,10 +52,10 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
+      <option value="$PROJECT_DIR$/Assets/Scripts/PlayerDataSlot.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/PlayerData.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/ConnectToServer.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GameController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/PlayerDataSlot.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="213mXsLBT1wQ3bzdWMvogYZ6H3Z" />
@@ -46,7 +70,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
@@ -97,7 +121,10 @@
       <workItem from="1638539350807" duration="2914000" />
       <workItem from="1638561785536" duration="4935000" />
       <workItem from="1639310508817" duration="7507000" />
-      <workItem from="1639347266669" duration="2180000" />
+      <workItem from="1639347266669" duration="2359000" />
+      <workItem from="1639426703565" duration="8237000" />
+      <workItem from="1639485260490" duration="6383000" />
+      <workItem from="1639586682993" duration="9784000" />
     </task>
     <servers />
   </component>
