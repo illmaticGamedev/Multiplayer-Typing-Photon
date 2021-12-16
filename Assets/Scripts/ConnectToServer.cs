@@ -7,6 +7,7 @@ using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using TMPro;
 using UnityEngine.UI;
+using Random = Unity.Mathematics.Random;
 
 public class ConnectToServer : MonoBehaviourPunCallbacks
 {
@@ -71,8 +72,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         //playButtonText.text = "QUICK PLAY";
         if (inputFieldLobbyName.text.Contains("_privateGame") == false && inputFieldLobbyName.text == "")
         {
-            PhotonNetwork.CreateRoom(usernameInput.text + "'s Lobby", new RoomOptions() {MaxPlayers = 4, IsOpen = false}, null);
-            Invoke(nameof(RoomState),2f);
+            PhotonNetwork.CreateRoom(usernameInput.text + "'s Lobby" + UnityEngine.Random.Range(0,5000), new RoomOptions() {MaxPlayers = 4, IsOpen = true}, null);
         }
     }
     
@@ -109,18 +109,11 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
     {
         playButtonText.text = "QUICK PLAY";
     }
-
-    public void RoomState(bool state = true)
-    {
-        PhotonNetwork.CurrentRoom.IsOpen = true;
-    }
-
+    
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log("New Player Entered The Room..");
         // newlyJoinedPlayer = newPlayer;
-        RoomState(false);
-        Invoke(nameof(RoomState),2f);
         if (PhotonNetwork.IsMasterClient)
         {
             myPV.RPC(nameof(CheckAndStartGameIfEnoughPlayersAvailable), RpcTarget.AllBuffered);

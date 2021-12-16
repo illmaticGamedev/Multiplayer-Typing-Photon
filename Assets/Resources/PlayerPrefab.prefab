@@ -434,9 +434,8 @@ MonoBehaviour:
   currentWPM: 0
   playerName: 
   progressValue: 0
-  playerNameText: {fileID: 3056168439566735606}
-  progressValueText: {fileID: 3056168439022876868}
-  currentWPMText: {fileID: 3056168437854335347}
+  myDataSlot: {fileID: 0}
+  pw: {fileID: 0}
 --- !u!114 &2883373486383506969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,7 +452,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   observableSearch: 2
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   ObservedComponents: []
   viewIdField: 0
