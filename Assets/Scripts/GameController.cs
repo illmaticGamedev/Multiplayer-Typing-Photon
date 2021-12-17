@@ -60,11 +60,26 @@ public class GameController : MonoBehaviour
     [SerializeField] private AudioClip keyboardClip;
 
     private int randomParagraphIndexSelectedByMaster;
+
+
+    [Header("BUG ISSUE - CLEARING POSSIBLE CACHE FROM ALL INPUT OBJECTS ")]
+    [SerializeField] TMP_InputField bugFixInputFieldMain;
+    [SerializeField] TMP_Text bugFixInputFieldChildTextObject;
     private void Awake()
     {
         Instance = this;
+        inputField.interactable = false;
     }
 
+    private void ClearPossibleCacheFromInputFields()
+    {
+        bugFixInputFieldMain.text = "";
+        bugFixInputFieldChildTextObject.text = "";
+        bugFixInputFieldChildTextObject.ClearMesh();
+        inputField.interactable = true;
+        inputField.Select();
+    }
+    
     public void typeAnimatingBarState(bool state)
     {
         paragraphWritingAnimatingBar.SetActive(state);
@@ -73,6 +88,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         _audioSource.clip = keyboardClip;
+        playerNameTextInputText.Select();
     }
    public void ChooseRandomParagraph(int index)
     {
@@ -82,7 +98,9 @@ public class GameController : MonoBehaviour
         ExtractWords(tempTextToTypeCopy);
         UpdateSliderScore();
     }
-    public void UpdatePlayerName()
+   
+
+   public void UpdatePlayerName()
     {
         myPlayerName = playerNameTextInputText.text;
     }
@@ -243,7 +261,7 @@ public class GameController : MonoBehaviour
     }
     public void StartGameAfterAllPlayerJoin()
     {
-        if (countdownStarted == false)
+        if (countdownStarted == false && gameStarted == false)
         {
             countdownStarted = true;
             waitingPanel.SetActive(true);
@@ -273,6 +291,8 @@ public class GameController : MonoBehaviour
             PhotonNetwork.CurrentRoom.IsOpen = false;
             gameStarted = true;
             waitingPanel.gameObject.SetActive(false);
+            ClearPossibleCacheFromInputFields();
+            CancelInvoke(nameof(AddSeconds));
         }
     }
 

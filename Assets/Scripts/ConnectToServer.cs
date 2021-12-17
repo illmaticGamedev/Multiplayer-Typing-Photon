@@ -92,6 +92,12 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         //newPlayerPV.RPC("SyncPlayerSlots",RpcTarget.AllBuffered);
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Return) &&  PhotonNetwork.InRoom == false)
+            OnClickPlay();
+    }
+
     public override void OnCreatedRoom()
     {
         Debug.Log("Created A Room..");
